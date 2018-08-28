@@ -1,0 +1,74 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="apiIlvl.js?rndstr=<%= getRandomStr() %>"></script>
+</head>
+<body>
+<style>
+    .savedCell {
+        background: #f16d6d;
+    }
+
+    .unsavedCell {
+        background: lightgreen;
+    }
+
+    .notAttunedCell {
+        background: #f1f191;
+    }
+
+    .clickable {
+        cursor: pointer;
+    }
+
+    .clickable:hover, .selected {
+        color: lightblue;
+        background: grey;
+    }
+
+    #availableInstances {
+        color: lightgreen;
+        display: inline-block;
+        margin-left: 50px;
+        font-weight: bold;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+
+    .whiteBox {
+        background: white;
+        padding: 5px 10px 5px 10px;
+        border-radius: 20px;
+        display: none;
+    }
+
+    .divider {
+        margin-top: 30px;
+    }
+
+    #trackCharForm {
+        margin: 0;
+    }
+</style>
+<div class="whiteBox" style="display:inline-block;">
+    <div id="charList"></div>
+    <div id="removeMe">Laddar...</div>
+</div>
+<div class="divider"></div>
+<div id="trackedChars" class="whiteBox" style="display: inline-block;">
+    <form id="trackCharForm" onsubmit="event.preventDefault();">
+        <label>Realm:</label>
+        <input type="text" name="realm"/>
+        <br/>
+        <label>Name:</label>
+        <input type="text" name="charName"/>
+        <br/>
+        <input type="submit" value="Add">
+    </form>
+    <input id="resetTrackedChars" type="button" value="Reset">
+</div>
+<div class="divider"></div>
+<div id='instanceMatcherParent' class="whiteBox">
+    <div id="instanceMatcher"></div>
+</div>
+</body>
+</html>
