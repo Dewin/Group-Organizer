@@ -45,7 +45,7 @@ var instances = [
 ];
 
 $(document).ready(function () {
-    $("#instanceMatcherParent").append("<button>Reset</button>").find("button").click(function () {
+	$("#instanceMatcherParent").append("<button>Reset</button>").find("button").click(function () {
 		instanceMatcherArray = [];
 		updateInstanceMatcher();
 	});
@@ -57,134 +57,142 @@ $(document).ready(function () {
 });
 
 function loadAndDisplayAllStandardChars() {
-    var count = 0;
-    $.when(
-        callApi("frostmane", "Apaduvet", count++),
-        callApi("draenor", "Strazi", count++),
-        callApi("draenor", "Schlebbe", count++),
-        callApi("khadgar", "Feministfist", count++),
-        callApi("frostmane", "Timsl", count++),
-        callApi("frostmane", "Omegatron", count++),
-        callApi("draenor", "Dewintwo", count++),
-        callApi("bloodfeather", "Nammatj", count++),
-        callApi("frostmane", "Bloodelfpala", count++),
-        callApi("draenor", "Exalterad", count++),
+	var count = 0;
+	charsArray = [];
+	$.when(
+		callApi("frostmane", "Apaduvet", count++),
+		callApi("draenor", "Strazi", count++),
+		callApi("draenor", "Schlebbe", count++),
+		callApi("khadgar", "Feministfist", count++),
+		callApi("frostmane", "Timsl", count++),
+		callApi("frostmane", "Omegatron", count++),
+		callApi("draenor", "Dewintwo", count++),
+		callApi("bloodfeather", "Nammatj", count++),
+		callApi("frostmane", "Bloodelfpala", count++),
+		callApi("draenor", "Exalterad", count++),
 		addTrackedChars(count)
-    ).then(function (a1) {
-        printTable();
-    });
+	).then(function (a1) {
+		printTable();
+	});
 }
 
 function printTable() {
-    $("#removeMe").hide();
-    charsArray.sort(compare);
-    $("#charList").html("");
-    var fullTable = "<table style='text-align:center;'>";
-    fullTable += buildTableHeader();
-    for (var i = 0; i < charsArray.length; i++) {
-        var oneRow = "<tr>";
-        if (i === 0)
-            oneRow += "<td><img style=\"width:18px;\" src=\"https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/135/crown_1f451.png\" /></td>";
-        else if (i === charsArray.length - 1)
-            oneRow += "<td><img style=\"width:18px;\" src=\"https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/135/baby_emoji-modifier-fitzpatrick-type-6_1f476-1f3ff_1f3ff.png\" /></td>";
-        else
-            oneRow += "<td></td>";
-        oneRow += "<td style='text-align:left;'><div id='charname" + i + "' class='clickable'>" + charsArray[i].name + "</div></td>";
-        oneRow += "</td>";
-        oneRow += "<td>ilvl: " + charsArray[i].avgilvlEq + " (" + charsArray[i].avgilvl + ")</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].ataldazar) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].freehold) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].kingsrest) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].sots) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].tos) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].mother) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].underrot) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].toldagor) + "</td>";
-        oneRow += "<td>" + getSavedHtml(charsArray[i].waycrest) + "</td>";
-        oneRow += "<td>" + getSavedHtmls(charsArray[i].sob, charsArray[i].sobAttuned) + "</td>";
-        oneRow += "</tr>";
-        fullTable += oneRow;
-    }
-    fullTable += "</table>";
-    $("#charList").html(fullTable);
-    $("body").css("background", "url(https://render-eu.worldofwarcraft.com/character/" + charsArray[0].background + ") 0px 40% / 100%");
-    for (var j = 0; j < charsArray.length; j++) {
-        $("#charname" + j).click(function () {
-            $(this).toggleClass("selected");
-            var charToFind = {
-                name: $(this).html()
-            };
-            toggleMatcherName(charsArray[findPositionInArray(charsArray, charToFind)]);
-        });
-    }
+	$("#removeMe").hide();
+	charsArray.sort(compare);
+	$("#charList").html("");
+	var fullTable = "<table style='text-align:center;'>";
+	fullTable += buildTableHeader();
+	for (var i = 0; i < charsArray.length; i++) {
+		var oneRow = "<tr>";
+		if (i === 0)
+			oneRow += "<td><img style=\"width:18px;\" src=\"https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/135/crown_1f451.png\" /></td>";
+		else if (i === charsArray.length - 1)
+			oneRow += "<td><img style=\"width:18px;\" src=\"https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/135/baby_emoji-modifier-fitzpatrick-type-6_1f476-1f3ff_1f3ff.png\" /></td>";
+		else
+			oneRow += "<td></td>";
+		oneRow += "<td style='text-align:left;'><div id='charname" + i + "' class='clickable'>" + charsArray[i].name + "</div></td>";
+		oneRow += "</td>";
+		oneRow += "<td>ilvl: " + charsArray[i].avgilvlEq + " (" + charsArray[i].avgilvl + ")</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].ataldazar) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].freehold) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].kingsrest) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].sots) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].tos) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].mother) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].underrot) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].toldagor) + "</td>";
+		oneRow += "<td>" + getSavedHtml(charsArray[i].waycrest) + "</td>";
+		oneRow += "<td>" + getSavedHtmls(charsArray[i].sob, charsArray[i].sobAttuned) + "</td>";
+		oneRow += "</tr>";
+		fullTable += oneRow;
+	}
+	fullTable += "</table>";
+	$("#charList").html(fullTable);
+	$("body").css("background", "url(https://render-eu.worldofwarcraft.com/character/" + charsArray[0].background + ") 0px 40% / 100%");
+	for (var j = 0; j < charsArray.length; j++) {
+		$("#charname" + j).click(function () {
+			$(this).toggleClass("selected");
+			var charToFind = {
+				name: $(this).html()
+			};
+			toggleMatcherName(charsArray[findPositionInArray(charsArray, charToFind)]);
+		});
+	}
 }
 
 function addTrackedChars(count) {
-    var trackedCharsArray = getTrackedCharsFromCookie();
-    if (trackedCharsArray.length > 0) {
-        for (var i = 0; i < trackedCharsArray.length; i++) {
-            $.when(callApi(trackedCharsArray[i].realm, trackedCharsArray[i].charName, count++)).then(printTable);
-        }
-    }
+	var trackedCharsArray = getTrackedCharsFromCookie();
+	if (trackedCharsArray.length > 0) {
+		for (var i = 0; i < trackedCharsArray.length; i++) {
+			$.when(callApi(trackedCharsArray[i].realm, trackedCharsArray[i].charName, count++)).then(function (a1) {
+				printTable();
+			});
+		}
+	}
 }
 
 function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+	var expires = "expires=" + d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
 }
 
 function getTrackedCharsFromCookie() {
-    var chars = getCookie("trackedChars").split("|");
-    if (chars !== "") {
-        var result = [];
-        for (var i = 0; i < chars.length - 1; i++) {
-            var char = chars[i].split(",");
-            result[i] = {
-                realm: char[0],
-                charName: char[1]
-            };
-        }
-        return result;
-    } else {
-        return "";
-    }
+	var chars = getCookie("trackedChars").split("|");
+	if (chars !== "") {
+		var result = [];
+		for (var i = 0; i < chars.length - 1; i++) {
+			var char = chars[i].split(",");
+			result[i] = {
+				realm: char[0],
+				charName: char[1]
+			};
+		}
+		return result;
+	} else {
+		return "";
+	}
 }
 
 function addCharFormListener() {
-    $("#trackCharForm").submit(function () {
-        var form = $(this);
-        var realmField = form.find("input[name=realm]");
-        var realm = realmField.val();
-        var charNameField = form.find("input[name=charName]");
-        var charName = charNameField.val();
-        realmField.val("");
-        charNameField.val("");
+	$("#trackCharForm").submit(function () {
+		var form = $(this);
+		var realmField = form.find("input[name=realm]");
+		var realm = realmField.val();
+		var charNameField = form.find("input[name=charName]");
+		var charName = charNameField.val();
+		realmField.val("");
+		charNameField.val("");
 
-        var cookie = getCookie("trackedChars");
-        setCookie("trackedChars", ((cookie != null) ? cookie : "") + realm + "," + charName + "|", 365);
+		var cookie = getCookie("trackedChars");
+		setCookie("trackedChars", ((cookie != null) ? cookie : "") + realm + "," + charName + "|", 365);
 
-    });
+		$.when(callApi(realm, charName, charsArray.length)).then(function (a1) {
+			printTable();
+		});
 
-    $("#resetTrackedChars").click(function () {
-        setCookie("trackedChars", "");
-    });
+	});
+
+	$("#resetTrackedChars").click(function () {
+		setCookie("trackedChars", "");
+		loadAndDisplayAllStandardChars();
+	});
 }
 
 function toggleMatcherName(charObj) {
